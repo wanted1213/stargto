@@ -2,10 +2,15 @@
   "name": "project_stargto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"  
   },
+  "_comments" : [
+    "Railway 가 npm start 명령을 통해 실행하기 때문에 script에 start 부분 추가함"
+  ],
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,4 +18,6 @@
   "dependencies": {
     "express": "^5.2.1"
   }
+  
 }
+

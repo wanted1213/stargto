@@ -1,7 +1,8 @@
 const express = require("express");     // express 함수 가져옴
 
 const app = express();  // express 를 통한 웹서버 객체 생성해서 app 객체에 저장
-const PORT = 3000;
+//const PORT = 3000;
+const PORT = process.env.PORT || 30000 ;  // Railway 올릴 땐 3000 포트로 고정하며 안됨. Railway는 자기 내부 포트를 사용함
 
 app.use(express.json());    // express 객체로 들어오는 웹요청을 json 으로 해석가능하도록 설정
 
