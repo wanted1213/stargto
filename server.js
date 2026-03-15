@@ -35,13 +35,22 @@ app.listen(PORT, () => {
 
 app.post("/calculate",(req,res)=>{
 
-    const result = {
-        action : "CALL",
-        raise : "60% POT",
-        winRate : "52%"
-    }
+    const hand = req.body.hand
+    const board = req.body.board
 
-    res.json(result)
+    const winRate = simulate(hand, board, 5000)
+
+    res.json({
+        winRate : (winRate*100).toFixed(1)+"%",
+        action : winRate>0.6 ? "RAISE" : "CALL",
+        raise : "70% POT"
+    })
 
 })
+
+
+const { calculateAction } = require("./engine/pokerEngine")
+
+const { simulate } = require("./engine/montecarlo")
+
 
