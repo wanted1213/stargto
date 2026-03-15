@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Poker GTO Advisor</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#1b1f27;
+    color:white;
+    padding:40px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+}
+
+.section{
+    background:#2a2f3a;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    border-radius:5px;
+    border:none;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    background:#4CAF50;
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.result{
+    margin-top:20px;
+    padding:20px;
+    background:#12151b;
+    border-radius:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Texas Hold'em GTO Advisor</h1>
+
+<div class="section">
+
+<h3>필수 입력</h3>
+
+<label>Your Hand</label>
+<input id="hand" placeholder="예: Ah Kh">
+
+<label>Your Stack</label>
+<input id="stack" type="number" placeholder="예: 1000">
+
+<label>Blind Size</label>
+<input id="blind" type="number" placeholder="예: 10">
+
+</div>
+
+<div class="section">
+
+<h3>선택 입력</h3>
+
+<label>Pot Size</label>
+<input id="pot" type="number" placeholder="예: 150">
+
+<label>Community Cards</label>
+<input id="board" placeholder="예: Qh Js 10d">
+
+<label>Call Amount</label>
+<input id="call" type="number" placeholder="예: 50">
+
+</div>
+
+<button onclick="calculate()">Calculate Optimal Action</button>
+
+<div class="result" id="result">
+
+<h3>Result</h3>
+
+<div>Recommended Action: <b id="action">-</b></div>
+<div>Raise Size: <b id="raiseSize">-</b></div>
+<div>Win Probability: <b id="winRate">-</b></div>
+
+</div>
+
+</div>
+
+<script>
+
+async function calculate(){
+
+    const data = {
+        hand: document.getElementById("hand").value,
+        stack: document.getElementById("stack").value,
+        blind: document.getElementById("blind").value,
+        pot: document.getElementById("pot").value,
+        board: document.getElementById("board").value,
+        call: document.getElementById("call").value
+    }
+
+    const res = await fetch("/calculate",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    })
+
+    const result = await res.json()
+
+    document.getElementById("action").innerText = result.action
+    document.getElementById("raiseSize").innerText = result.raise
+    document.getElementById("winRate").innerText = result.winRate
+
+}
+
+</script>
+
+</body>
+</html>
